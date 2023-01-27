@@ -29,12 +29,13 @@ static void hash_table_delete_item(hash_table_item * item) {
 hash_table_table * hash_table_new() {
     hash_table_table * hash_table = malloc(sizeof(hash_table_table));
 
+    // check result of the call to malloc
     if (hash_table != NULL) {
         hash_table->count = 0;
         hash_table->items = calloc((size_t) hash_table->size, sizeof(hash_table_item *)); // TODO: check calloc response
         hash_table->size = 50; // TODO: add resize ability in future
     } else {
-        printf("%s \n", "Malloc failed");
+        printf("%s \n", "Malloc failed when creating hash table");
     }
 
     return hash_table;
