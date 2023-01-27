@@ -13,6 +13,13 @@ static hash_table_item * hash_table_new_item(const char * k, const char * v) {
     return item;
 }
 
+// item deletion function
+static void hash_table_delete_item(hash_table_item * item) {
+    free(item->key);
+    free(item->value);
+    free(item);
+}
+
 // table initialisation function
 hash_table_table * hash_table_new() {
     hash_table_table * hash_table = malloc(sizeof(hash_table_table)); // TODO: check malloc response
