@@ -22,11 +22,15 @@ static void hash_table_delete_item(hash_table_item * item) {
 
 // table initialisation function
 hash_table_table * hash_table_new() {
-    hash_table_table * hash_table = malloc(sizeof(hash_table_table)); // TODO: check malloc response
+    hash_table_table * hash_table = malloc(sizeof(hash_table_table));
 
-    hash_table->count = 0;
-    hash_table->items = calloc((size_t) hash_table->size, sizeof(hash_table_item *)); // TODO: check calloc response
-    hash_table->size = 50; // TODO: add resize ability in future
+    if (hash_table != NULL) {
+        hash_table->count = 0;
+        hash_table->items = calloc((size_t) hash_table->size, sizeof(hash_table_item *)); // TODO: check calloc response
+        hash_table->size = 50; // TODO: add resize ability in future
+    } else {
+        printf("%s \n", "Malloc failed");
+    }
 
     return hash_table;
 }
