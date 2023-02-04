@@ -57,7 +57,7 @@ void hash_table_insert(hash_table_table * hash_table, const char * key, const ch
     if (item != NULL) {
         // get the hash for the new item
         int index = hash_table_dh_get_hash(item->key, hash_table->size, 0);
-        
+
         // determine if there is an item already at this hash
         hash_table_item * item_at_index = hash_table->items[index];
         int attempt_number = 1;
@@ -76,6 +76,29 @@ void hash_table_insert(hash_table_table * hash_table, const char * key, const ch
     } else {
         printf("%s \n", "Item could not be inserted as there was not enough memory to store it");
     }
+}
+
+// define table search function
+char * hash_table_search(hash_table_table * hash_table, const char * key) {
+    int index = hash_table_dh_get_hash(key, hash_table->size, 0);
+    hash_table_item * item_at_index = hash_table->items[index];
+
+    int attempt_count = 1;
+    // perform linear search while we're not at an empty index
+    while (item_at_index != NULL) {
+        // check item for a matching key
+        if (strcmp(item_at_index->key, key) == 0) {
+            return item_at_index->value;
+        }
+
+        // retrieve item for next attempt
+        index = hash_table_dh_get_hash(key, hash_table->size, attempt_count);
+        item_at_index = hash_table->items[index];
+        attempt_count++;
+    }
+
+    // key not present in the hash table
+    return NULL;
 }
 
 // table deletion function
