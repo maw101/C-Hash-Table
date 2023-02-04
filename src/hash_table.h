@@ -21,6 +21,7 @@ static void hash_table_delete_item(hash_table_item * item);
 hash_table_table * hash_table_new();
 void hash_table_insert(hash_table_table * hash_table, const char * key, const char * value);
 char * hash_table_search(hash_table_table * hash_table, const char * key);
+void hash_table_delete_key(hash_table_table * hash_table, const char* key);
 void hash_table_delete_table(hash_table_table * hash_table);
 
 #endif //SRC_HASH_TABLE_H
