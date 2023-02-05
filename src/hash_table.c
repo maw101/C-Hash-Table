@@ -90,7 +90,7 @@ char * hash_table_search(hash_table_table * hash_table, const char * key) {
     // perform linear search while we're not at an empty index
     while (item_at_index != NULL) {
         // check item for a matching key
-        if (strcmp(item_at_index->key, key) == 0) {
+        if ((strcmp(item_at_index->key, key) == 0) && (item_at_index != &HASH_TABLE_DELETED_ITEM)) {
             return item_at_index->value;
         }
 
