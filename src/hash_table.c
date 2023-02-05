@@ -110,8 +110,8 @@ void hash_table_delete_key(hash_table_table * hash_table, const char* key) {
     hash_table_item * item_at_index = hash_table->items[index];
 
     int attempt_count = 1;
-    // perform linear search while we're not at an empty index
-    while (item_at_index != NULL) {
+    // perform linear search while we're not at an empty index or deleted item
+    while ((item_at_index != NULL) && (item_at_index != &HASH_TABLE_DELETED_ITEM)) {
         // ensure we're not at a deleted item
         if (item_at_index != &HASH_TABLE_DELETED_ITEM) {
             // check item for a matching key
