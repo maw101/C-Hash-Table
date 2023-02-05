@@ -63,14 +63,22 @@ void hash_table_insert(hash_table_table * hash_table, const char * key, const ch
 
         // determine if there is an item already at this hash
         hash_table_item * item_at_index = hash_table->items[index];
-        int attempt_number = 1;
+        int attempt_count = 1;
 
         // while we're not at an empty index keep generating a new index
         while (item_at_index != NULL) {
-            index = hash_table_dh_get_hash(item->key, hash_table->size, attempt_number);
-            // determine if there is an item already at the index
+            // check item for a matching key
+            if (strcmp(item_at_index->key, key) == 0) {
+                // replace item with new value
+                hash_table_delete_item(item_at_index);
+                hash_table->items[index] = item;
+                return;
+            }
+
+            // retrieve item for next attempt
+            index = hash_table_dh_get_hash(item->key, hash_table->size, attempt_count);
             item_at_index = hash_table->items[index];
-            attempt_number++;
+            attempt_count++;
         }
 
         // store the item in the free index
