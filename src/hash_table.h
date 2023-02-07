@@ -22,7 +22,7 @@ hash_table_table * hash_table_new();
 hash_table_table * hash_table_new_given_size(const int base_size);
 void hash_table_insert(hash_table_table * hash_table, const char * key, const char * value);
 char * hash_table_search(hash_table_table * hash_table, const char * key);
-void hash_table_delete_key(hash_table_table * hash_table, const char* key);
+void hash_table_delete_key(hash_table_table * hash_table, const char * key);
 void hash_table_delete_table(hash_table_table * hash_table);
 
 static void hash_table_resize_grow(hash_table_table * hash_table);

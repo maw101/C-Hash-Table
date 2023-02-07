@@ -111,6 +111,10 @@ char * hash_table_search(hash_table_table * hash_table, const char * key) {
     int attempt_count = 1;
     // perform linear search while we're not at an empty index
     while (item_at_index != NULL) {
+        if (attempt_count > hash_table->size) {
+            return NULL;
+        }
+
         // check item for a matching key
         if ((item_at_index != &HASH_TABLE_DELETED_ITEM) && (strcmp(item_at_index->key, key) == 0)) {
             return item_at_index->value;
@@ -127,13 +131,18 @@ char * hash_table_search(hash_table_table * hash_table, const char * key) {
 }
 
 // table deletion function for given key
-void hash_table_delete_key(hash_table_table * hash_table, const char* key) {
+void hash_table_delete_key(hash_table_table * hash_table, const char * key) {
     int index = get_double_hashing_hash(key, hash_table->size, 0);
     hash_table_item * item_at_index = hash_table->items[index];
 
     int attempt_count = 1;
     // perform linear search while we're not at an empty index or deleted item
     while ((item_at_index != NULL) && (item_at_index != &HASH_TABLE_DELETED_ITEM)) {
+        if (attempt_count > hash_table->size) {
+            printf("Item with key '%s' could not be located for deletion.", key);
+            return;
+        }
+
         // ensure we're not at a deleted item
         if (item_at_index != &HASH_TABLE_DELETED_ITEM) {
             // check item for a matching key
@@ -163,18 +172,18 @@ void hash_table_delete_key(hash_table_table * hash_table, const char* key) {
 
 // table deletion function
 void hash_table_delete_table(hash_table_table * hash_table) {
-    // ensure hash table pointer is not null
     if (hash_table != NULL) {
-        // check if we have any items to delete
         if (hash_table->count != 0) {
+
             // delete all items in the table
             for (int item_index = 0; item_index < hash_table->size; item_index++) {
                 hash_table_item *item = hash_table->items[item_index];
-                // determine if we must delete the item
+                
                 if ((item != NULL) && (item != &HASH_TABLE_DELETED_ITEM)) {
                     hash_table_delete_item(item);
                 }
             }
+
         }
 
         // free memory
