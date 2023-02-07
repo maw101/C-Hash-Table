@@ -1,4 +1,5 @@
 #include <math.h>
+#include <string.h>
 
 #include "hash_functions.h"
 
@@ -20,7 +21,7 @@ static int hash_table_hash(const char * key, const int prime, const int hash_tab
 }
 
 // double hashing function
-static int get_double_hashing_hash(const char * s, const int hash_table_size, const int attempt_number) {
+int get_double_hashing_hash(const char * s, const int hash_table_size, const int attempt_number) {
     const int hash_a = hash_table_hash(s, PRIME_1, hash_table_size);
     const int hash_b = hash_table_hash(s, PRIME_2, hash_table_size);
 
