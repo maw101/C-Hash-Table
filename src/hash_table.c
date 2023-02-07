@@ -66,6 +66,12 @@ void hash_table_insert(hash_table_table * hash_table, const char * key, const ch
     hash_table_item * item = hash_table_new_item(key, value);
 
     if (item != NULL) {
+        // check load of the hash table and determine if we should resize upwards
+        const int hash_table_load = hash_table->count * 100 / hash_table->size;
+        if (hash_table_load > 70) {
+            hash_table_resize_grow(hash_table);
+        }
+
         // get the hash for the new item
         int index = get_double_hashing_hash(item->key, hash_table->size, 0);
 
@@ -146,6 +152,12 @@ void hash_table_delete_key(hash_table_table * hash_table, const char* key) {
         index = get_double_hashing_hash(key, hash_table->size, attempt_count);
         item_at_index = hash_table->items[index];
         attempt_count++;
+    }
+
+    // check load of the hash table and determine if we should resize downwards (shrink)
+    const int hash_table_load = hash_table->count * 100 / hash_table->size;
+    if (hash_table_load < 10) {
+        hash_table_resize_shrink(hash_table);
     }
 }
 
