@@ -10,7 +10,7 @@ int PRIME_2 = 137;
 // hashing function
 static int hash_table_hash(const char * key, const int prime, const int hash_table_size) {
     long hash_value = 0;
-    const int key_length = strlen(key);
+    const int key_length = (const int) strlen(key);
 
     for (int i = 0; i < key_length; i++) {
         hash_value += (long) pow(prime, key_length - (i + 1)) * key[i];
